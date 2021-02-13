@@ -29,11 +29,21 @@ pipeline {
                sh 'go test ./... -v'
            }
        }
-       stage('Building and Pushing image') {
-           steps {
-               dockerImage = docker.build registry + ":$BUILD_NUMBER"
-               dockerImage.push()
+stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
           }
         }
+      }
+    }
     }
 }
