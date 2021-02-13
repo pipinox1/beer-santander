@@ -8,15 +8,6 @@ pipeline {
            GOCACHE = "/tmp"
        }
    stages {
-        stage('Install Dependencies') {
-           steps {
-               sh 'pwd'
-               sh 'ls'
-               sh 'cd ${GOPATH}/src'
-               sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/beer'
-               sh 'go mod tidy'
-           }
-       }
        stage('Build') {
            steps {
                sh 'go build'
