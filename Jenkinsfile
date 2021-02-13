@@ -5,9 +5,18 @@ pipeline {
             }
     }
     environment {
-           GOCACHE = "/tmp"
-       }
+           GOCACHE  = '/tmp'
+           CGO_ENABLED= 0
+           GO111MODULE='off'
+      }
    stages {
+        stage('Install Dependencies') {
+           steps {
+               sh 'pwd'
+               sh 'ls'
+               sh 'go mod tidy'
+           }
+       }
        stage('Build') {
            steps {
                sh 'go build'
