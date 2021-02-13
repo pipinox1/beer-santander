@@ -7,7 +7,9 @@ pipeline {
     environment {
            GOCACHE  = '/tmp'
            CGO_ENABLED= 0
-      }
+           registry = "pipinox1/beer-santander"
+           registryCredential = 'dockerhub'
+    }
    stages {
         stage('Install Dependencies') {
            steps {
@@ -27,5 +29,12 @@ pipeline {
                sh 'go test ./... -v'
            }
        }
+       stage('Building our image') {
+           steps {
+            script {
+               dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+          }
+        }
     }
 }

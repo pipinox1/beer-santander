@@ -34,7 +34,7 @@ func TestCalculateBeer(t *testing.T) {
 func TestServiceGetTotalBeerErrorGettingWeather(t *testing.T) {
 	mockWeatherRepository := &mockWeatherRepository{}
 	s := NewService(mockWeatherRepository)
-	mockWeatherRepository.Mock.On("GetCurrentWeather", mock.Anything).Return(nil, customerror.NewExternalServiceError("Service Unavailable", "weather_api", 503))
+	mockWeatherRepository.Mock.On("GetWeather", mock.Anything).Return(nil, customerror.NewExternalServiceError("Service Unavailable", "weather_api", 503))
 	_, err := s.GetTotalBeer(context.Background(), &model.MeetUp{TotalGuests: 100, Location: model.Location{Latitude: -13, Longitude: 12}})
 	assert.NotNil(t,err)
 	assert.Equal(t,"Service Unavailable",err.Error())
