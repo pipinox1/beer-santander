@@ -9,6 +9,7 @@ pipeline {
            CGO_ENABLED= 0
            registry = "pipinox1/beer-santander"
            registryCredential = 'dockerhub'
+           PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
     }
    stages {
         stage('Initialize'){
