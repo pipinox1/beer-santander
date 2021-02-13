@@ -4,6 +4,9 @@ pipeline {
                 image 'golang:1.15-alpine'
             }
     }
+    environment {
+           GOCACHE = "/tmp"
+       }
    stages {
         stage('Install Dependencies') {
            steps {
@@ -17,6 +20,7 @@ pipeline {
        }
        stage('Test') {
            steps {
+               sh 'go clean -cache'
                sh 'go test ./... -v'
            }
        }
