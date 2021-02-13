@@ -20,4 +20,5 @@ pipeline {
                sh 'go test ./... -v'
            }
        }
+    }
 }
