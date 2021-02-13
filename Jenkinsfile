@@ -11,6 +11,11 @@ pipeline {
            registryCredential = 'dockerhub'
     }
    stages {
+        stage('Initialize'){
+          steps {
+                sh 'docker ps'
+            }
+        }
         stage('Install Dependencies') {
            steps {
                sh 'pwd'
