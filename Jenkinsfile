@@ -4,7 +4,6 @@ pipeline {
            GOCACHE  = '/tmp'
            CGO_ENABLED= 0
            registry = "pipinox1/beer-santander"
-           registryCredential = 'dockerhub'
     }
    stages {
         stage('Install Dependencies') {
@@ -50,7 +49,7 @@ stage('Building image') {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry( '', 'dockerhubcredential' ) {
            dockerImage.push()
           }
         }
