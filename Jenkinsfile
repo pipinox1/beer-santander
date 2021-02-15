@@ -7,11 +7,11 @@ pipeline {
     }
    stages {
         stage('Install Dependencies') {
-        agent{
-         docker {
+            agent{
+                docker {
                         image 'golang:1.15-alpine'
-                    }
-        }
+                }
+            }
            steps {
                sh 'pwd'
                sh 'ls'
@@ -19,52 +19,47 @@ pipeline {
            }
        }
        stage('Build') {
-               agent{
+            agent{
                 docker {
-                               image 'golang:1.15-alpine'
-                           }
-               }
+                        image 'golang:1.15-alpine'
+                }
+            }
            steps {
                sh 'go build'
            }
        }
        stage('Test') {
-               agent{
+            agent{
                 docker {
-                               image 'golang:1.15-alpine'
-                           }
-               }
+                        image 'golang:1.15-alpine'
+                }
+            }
            steps {
                sh 'go clean -cache'
                sh 'go test ./... -v'
            }
        }
-stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', 'dockerhubcred' ) {
-           dockerImage.push()
-            dockerImage.push('latest')
-          }
-        }
-      }
-    }
-
-            stage('Clean Image') {
-
-                steps {
-
-                    sh "docker rmi $registry:$BUILD_NUMBER"
-
+       stage('Building image') {
+           steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
-
             }
+        }
+       stage('Pushing to Registry') {
+           steps{
+                script {
+                    docker.withRegistry( 'https://registry.hub.docker.com', 'dockerhubcred' ) {
+                        dockerImage.push()
+                         dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+       stage('Clean Image') {
+           steps {
+                   sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
     }
 }
