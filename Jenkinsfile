@@ -46,16 +46,18 @@ stage('Building image') {
         }
       }
     }
-    stage('Pushing Image') {
+    stage('Deploy Image') {
       steps{
         script {
+          docker.withRegistry( 'https://registry.hub.docker.com', 'dockerhubcred' ) {
            dockerImage.push()
-           dockerImage.push('latest')
+            dockerImage.push('latest')
+          }
         }
       }
     }
 
-            stage('Cleaning Image') {
+            stage('Clean Image') {
 
                 steps {
 
