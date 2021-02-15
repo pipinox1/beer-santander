@@ -9,8 +9,15 @@ pipeline {
            CGO_ENABLED= 0
            registry = "pipinox1/beer-santander"
            registryCredential = 'dockerhub'
+            dockerHome = tool 'docker'
+            PATH = "${docker}/bin:${env.PATH}"
     }
    stages {
+        stage('Initialize'){
+          steps {
+                sh 'docker ps'
+            }
+        }
         stage('Install Dependencies') {
            steps {
                sh 'pwd'
