@@ -13,11 +13,6 @@ pipeline {
             PATH = "${docker}/bin:${env.PATH}"
     }
    stages {
-        stage('Initialize'){
-          steps {
-                sh 'docker ps'
-            }
-        }
         stage('Install Dependencies') {
            steps {
                sh 'pwd'
