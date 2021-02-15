@@ -5,16 +5,8 @@ pipeline {
            CGO_ENABLED= 0
            registry = "pipinox1/beer-santander"
            registryCredential = 'dockerhub'
-            dockerHome = tool 'docker'
-            PATH = "${docker}/bin:${PATH}"
     }
    stages {
-        stage('Initialize'){
-          steps {
-                sh '$PAHT'
-                sh 'docker ps'
-            }
-        }
         stage('Install Dependencies') {
         agent{
          docker {
@@ -59,7 +51,7 @@ stage('Building image') {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+           dockerImage.push()
           }
         }
       }
