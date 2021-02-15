@@ -15,7 +15,6 @@ pipeline {
    stages {
         stage('Initialize'){
           steps {
-                sh 'cat ${PATH}'
                 sh 'docker ps'
             }
         }
