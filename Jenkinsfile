@@ -49,7 +49,7 @@ stage('Building image') {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', 'gcr:dockerhub' ) {
+          docker.withRegistry( '', 'dockerhub' ) {
            dockerImage.push()
           }
         }
