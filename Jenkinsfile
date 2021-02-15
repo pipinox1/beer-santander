@@ -15,6 +15,7 @@ pipeline {
    stages {
         stage('Initialize'){
           steps {
+           sh 'whereis docker'
                 sh 'docker ps'
             }
         }
