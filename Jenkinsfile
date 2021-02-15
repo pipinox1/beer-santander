@@ -50,6 +50,7 @@ stage('Building image') {
       steps{
         script {
            dockerImage.push()
+           dockerImage.push('latest')
         }
       }
     }
