@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-            docker {
-                image 'golang:1.15-alpine'
-            }
-    }
+    agent any
     environment {
            GOCACHE  = '/tmp'
            CGO_ENABLED= 0
@@ -15,11 +11,16 @@ pipeline {
    stages {
         stage('Initialize'){
           steps {
-           sh 'whereis docker'
+                sh '$PAHT'
                 sh 'docker ps'
             }
         }
         stage('Install Dependencies') {
+        agent{
+         docker {
+                        image 'golang:1.15-alpine'
+                    }
+        }
            steps {
                sh 'pwd'
                sh 'ls'
@@ -27,11 +28,21 @@ pipeline {
            }
        }
        stage('Build') {
+               agent{
+                docker {
+                               image 'golang:1.15-alpine'
+                           }
+               }
            steps {
                sh 'go build'
            }
        }
        stage('Test') {
+               agent{
+                docker {
+                               image 'golang:1.15-alpine'
+                           }
+               }
            steps {
                sh 'go clean -cache'
                sh 'go test ./... -v'
