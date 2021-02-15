@@ -10,9 +10,15 @@ pipeline {
            registry = "pipinox1/beer-santander"
            registryCredential = 'dockerhub'
             dockerHome = tool 'docker'
-            PATH = "${docker}/bin:${env.PATH}"
+            PATH = "${docker}/bin:${PATH}"
     }
    stages {
+        stage('Initialize'){
+          steps {
+                sh 'cat ${PATH}'
+                sh 'docker ps'
+            }
+        }
         stage('Install Dependencies') {
            steps {
                sh 'pwd'
